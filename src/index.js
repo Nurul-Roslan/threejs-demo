@@ -9,7 +9,7 @@ const THREE = require("three");
 
 function createRenderer() {
   let renderer = new THREE.WebGLRenderer({
-      antialias: true,
+    antialias: true,
   });
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setClearColor("#16161d"); // Eigengrau
@@ -28,7 +28,7 @@ function createCamera() {
     45, // Field of View
     window.innerWidth / window.innerHeight, // Aspect Ratio
     0.1, // Near Value
-    1000, // Far Value
+    1000 // Far Value
   );
   camera.position.set(-30, 40, 30); // x, y, z
   camera.lookAt(0, 0, 0);
@@ -40,12 +40,27 @@ function createAxesHelper() {
   return axesHelper;
 }
 
+function getRandomColor() {
+  let colors = [
+    "dodgerblue",
+    "tomato",
+    "limegreen",
+    "rebeccapurple",
+    "gold",
+    "lavender",
+    "lightcoral",
+    "papayawhip",
+  ];
+  let randomIndex = Math.floor(Math.random() * colors.length);
+  return colors[randomIndex];
+}
+
 function createCube() {
   // Geometry - The actual shape/skeleton of the object
   let geometry = new THREE.BoxGeometry(4, 4, 4);
   // Material - The colour/how it interacts with light
   let material = new THREE.MeshLambertMaterial({
-    color: "tomato",
+    color: getRandomColor(),
   });
   // Create a mesh by combining the geometry and the material
   let mesh = new THREE.Mesh(geometry, material);
@@ -58,7 +73,7 @@ function createSphere() {
   let geo = new THREE.SphereGeometry(4, 30, 30);
   // Material
   let mat = new THREE.MeshLambertMaterial({
-    color: "dodgerblue",
+    color: getRandomColor(),
   });
   // Mesh
   let mesh = new THREE.Mesh(geo, mat);
@@ -67,7 +82,7 @@ function createSphere() {
 }
 
 function createLight() {
-  let light = new THREE.PointLight("white", 1);
+  let light = new THREE.PointLight("white", 1.5);
   return light;
 }
 
@@ -97,8 +112,8 @@ scene.add(cube, sphere, light, lightHelper);
 renderer.render(scene, camera);
 
 function animate() {
-  // cube.rotation.z -= 0.1;
-  // cube.position.z -= 0.1;
+  cube.rotation.z -= 0.1;
+  cube.position.y += 0.1;
   // Muck around with the axes
   // Increment and decrement the x, y, z
   renderer.render(scene, camera);
